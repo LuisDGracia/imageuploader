@@ -10,6 +10,7 @@ export const Container = styled.div`
 export const Card = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   width: 400px;
   height: 470px;
   border-radius: 10px;
@@ -26,10 +27,19 @@ export const Drag = styled.div`
   background-color: rgba(128, 198, 255, 0.25);
 `;
 
-export const DragText = styled.p`
+export const Text = styled.p`
   text-align: center;
-  position: relative;
-  top: 130px;
+  ${ props => {
+    if( props.bottom ){
+      const position = [
+        "position: relative;",
+        "top: 140px;"
+      ]
+
+      return position;
+    }
+  }}
+  font-size: ${ props => props.size || '15' }px;
   font-family: sans-serif;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, ${props => props.alpha || '1' });
 `;
