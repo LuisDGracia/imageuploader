@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   justify-content: center;
+  flex-direction: column;
   width: 100%;
   height: 100%;
 `;
@@ -40,6 +41,22 @@ export const Text = styled.p`
     }
   }}
   font-size: ${ props => props.size || '15' }px;
-  font-family: sans-serif;
+  font-family: ${ props => props.font || 'sans-serif' } ;
   color: rgba(0, 0, 0, ${props => props.alpha || '1' });
+`;
+
+export const Nothing = styled.input`
+  visibility: hidden;
+`;
+
+export const Button = styled.label`
+  display: inline-block;
+  color: #fff;
+  width: 100px;
+  height: 40px;
+  margin: 0 auto;
+  line-height: 220%;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #2f80ed;
 `;

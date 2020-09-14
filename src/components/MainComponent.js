@@ -1,17 +1,15 @@
-import React from 'react'
-import { Card, Container, Drag, Text } from './MainStyles'
+import React, { Fragment } from 'react'
+import { Container, Text } from './MainStyles'
+import Uploader from './UploaderComponent'
 
 function Main() {
   return (
-    <Container>
-      <Card>
-        <Text size={ 27 } alpha={ 0.7 } >Upload you image</Text>
-        <Text size={ 14 } alpha={ 0.4 } >File should be Jpeg, Png...</Text>
-        <Drag>
-          <Text size={14} alpha={ 0.4 } bottom>Drag &amp; Drop your image here </Text>
-        </Drag>
-      </Card>
-    </Container>
+    <Fragment>
+      <Container>
+        <Uploader />
+        <Text size={ 12 } font= {"Courier New"} >&copy;Zuzki made this</Text>
+      </Container>
+    </Fragment>
   )
 }
 
