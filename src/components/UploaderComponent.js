@@ -1,21 +1,30 @@
 import React, { Component, Fragment } from 'react'
 import { Card, Drag, Text, Nothing, Button } from "./MainStyles";
-import axios from 'axios';
+import { storage } from '../firebase'
 
 export default class Uploader extends Component {
 
-  state = {
-    selectedFile: null
-  }
-
   fileSelectedHandler = event => {
-    console.log( event.target.files[0] )
-    this.setStateU({
-      selectedFile: event.target.files[0]
-    });
-  }
+    console.log( event.target )
+    const file = event.target.files[0];
+
+    const storageRef = storage.ref(`imagenes/${file.name}`);
+    const task = storageRef.put(file);
+
+    task.on('state_changed', snapshot => {
+      console.log( snapshot )
+    }, err => console.log( err ), 
+    () => {
+      storage.ref("imagenes").child(file.name).getDownloadURL().then( url => {
+        console.log( url )
+      })
+    }
+  )}
 
   render() {
+    
+
+
     return (
       <Fragment>
         <Card>
@@ -26,7 +35,7 @@ export default class Uploader extends Component {
           </Drag>
           <Text size={ 14 } alpha={ 0.4 }>Or</Text>
           <Button htmlFor="files" >Choose a file</Button>
-          <Nothing type='file' id="files" onChange= { this.fileSelectedHandler } />
+          <Nothing type='file' id="files" onChange= { this.fileSelectedHandler } accept="image/x-png, image/gif, image/jpeg" />
         </Card>
       </Fragment>
     )
