@@ -12,7 +12,7 @@ class DragDrop extends Component {
         </Drag>
         <Text size={ 14 } alpha={ 0.4 }>Or</Text>
         <Button htmlFor="files" >Choose a file</Button>
-        <Nothing type='file' id="files" onChange= { this.props.upload } accept="image/png, image/jpeg" />
+        <Nothing type='file' id="files" onChange= { this.props.upload } />
       </Card>
     )
   }
