@@ -1,42 +1,81 @@
-import React, { Component, Fragment } from 'react'
-import { Card, Drag, Text, Nothing, Button } from "./MainStyles";
+import React, { Fragment, Component } from 'react'
 import { storage } from '../firebase'
+import DragDrop from './CardComponent'
 
 export default class Uploader extends Component {
 
-  fileSelectedHandler = event => {
-    console.log( event.target )
-    const file = event.target.files[0];
+  constructor(props){
+    super(props)
 
-    const storageRef = storage.ref(`imagenes/${file.name}`);
-    const task = storageRef.put(file);
-
-    task.on('state_changed', snapshot => {
-      console.log( snapshot )
-    }, err => console.log( err ), 
-    () => {
-      storage.ref("imagenes").child(file.name).getDownloadURL().then( url => {
-        console.log( url )
-      })
+    this.state = {
+      progress: 0,
+      image: null,
+      error: "",
+      url: ""
     }
-  )}
 
-  render() {
+    this.fileSelectedHandler = this.fileSelectedHandler.bind()
+  }
+
+  componentDidMount(){
+    this.setState({
+      progress: 0,
+      image: null,
+      error: "",
+      url: "",
+    });
+  }
+
+  componentDidUpdate() {
+    console.log(this.state)
+  }
+
+  fileSelectedHandler = async (event) => {
+
+    const file = event.target.files[0];
     
+    if( file ){
+      const fileType = file["type"];
+      const validTypes = ["image/png", "image/jpeg"]
 
+      if( validTypes.includes(fileType) ){
+        await this.setState({ error: "" });
+        await this.setState({ ...this.state, image: file });
+      }else await this.setState({ error: "Incorrect file type"})
 
+    }else await this.setState({ error: "No file were selected"})
+
+    if (this.state.image) {
+      const storageRef = storage.ref(`imagenes/${this.state.image.name}`);
+      const task = storageRef.put(this.state.image);
+
+      task.on(
+        "state_changed",
+        async (snapshot) => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          await this.setState({ progress: progress });
+        },
+        async (err) => await this.setState({ error: err }),
+        () => {
+          storage
+            .ref("imagenes")
+            .child(this.state.image.name)
+            .getDownloadURL()
+            .then( async (url) => {
+              await this.setState({ url: url });
+              await this.setState({ progress: 0 });
+            });
+        }
+      );
+    } else await this.setState({ error: "No image available" });
+  }
+
+  render(){
     return (
       <Fragment>
-        <Card>
-          <Text size={ 27 } alpha={ 0.7 } >Upload you image</Text>
-          <Text size={ 14 } alpha={ 0.4 } >File should be Jpeg, Png...</Text>
-          <Drag>
-            <Text size={14} alpha={ 0.4 } bottom>Drag &amp; Drop your image here </Text>
-          </Drag>
-          <Text size={ 14 } alpha={ 0.4 }>Or</Text>
-          <Button htmlFor="files" >Choose a file</Button>
-          <Nothing type='file' id="files" onChange= { this.fileSelectedHandler } accept="image/x-png, image/gif, image/jpeg" />
-        </Card>
+        <DragDrop upload={ this.fileSelectedHandler } />
       </Fragment>
     )
   }
