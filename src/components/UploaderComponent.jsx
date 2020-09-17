@@ -22,11 +22,7 @@ export default function Uploader(){
           var progresion = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          
-          if( progresion < 100 ){
-            setUpload( progresion )
-          }
-          console.log( progresion)
+          setUpload( progresion )
         },
         (err) =>{if( err ) setError(err)},
         () => {
@@ -41,7 +37,7 @@ export default function Uploader(){
         }
       );
     }
-  }, [image, upload, url]);
+  }, [image, url]);
 
   const fileSelectedHandler = (event) => {
     setRender(false);
