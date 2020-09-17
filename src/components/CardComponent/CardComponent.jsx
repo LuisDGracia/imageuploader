@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { CardContainer, Drag, Text, Nothing, Button } from "./MainStyles";
+import { CardContainer, Drag, Text, Nothing, Button } from "./CardStyles";
 
 class DragDrop extends Component {
   render(){
@@ -12,7 +12,7 @@ class DragDrop extends Component {
         </Drag>
         <Text size={ 14 } alpha={ 0.4 }>Or</Text>
         <Button htmlFor="files" >Choose a file</Button>
-        <Nothing type='file' id="files" onChange= { this.props.upload } />
+        <Nothing type='file' id="files" onChange= { this.props.uploadImage } />
       </CardContainer>
     )
   }

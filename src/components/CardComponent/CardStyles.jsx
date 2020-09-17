@@ -31,15 +31,20 @@ export const Drag = styled.div`
 export const Text = styled.p`
   text-align: center;
   ${ props => {
-    if( props.bottom ){
-      const position = [
-        "position: relative;",
-        "top: 140px;"
-      ]
+    switch( props.position ){
+      case "bottom":
+        const bottom = ["position: relative;", "top: 140px;"];
+        return bottom;
 
-      return position;
+      case "left": 
+        const left = ["margin: 10px 0px 10px 40px;", "text-align: start;"];
+        return left;
+
+      default: 
+        break;
     }
   }}
+
   font-size: ${ props => props.size || '15' }px;
   font-family: ${ props => props.font || 'sans-serif' } ;
   color: rgba(0, 0, 0, ${props => props.alpha || '1' });
