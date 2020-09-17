@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Container, Text } from './MainStyles'
+import { Container, Text } from './CardComponent/CardStyles'
 import Uploader from './UploaderComponent'
 
 function Main() {

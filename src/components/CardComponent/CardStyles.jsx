@@ -8,7 +8,7 @@ export const Container = styled.div`
   height: 100%;
 `;
 
-export const Card = styled.div`
+export const CardContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;

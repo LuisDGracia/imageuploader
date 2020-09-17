@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { storage } from '../firebase'
-import DragDrop from './CardComponent'
+import Card from './CardComponent/CardComponent'
 
 export default class Uploader extends Component {
 
@@ -80,7 +80,7 @@ export default class Uploader extends Component {
     return (
       <Fragment>
         {this.state.render ? (
-          <DragDrop upload={this.fileSelectedHandler} />
+          <Card upload={this.fileSelectedHandler} />
         ) : this.state.error ? (
           <p style={{ color: "red", margin: "0 auto" }}>{this.state.error}</p>
         ) : this.state.progress > 0 ? (
