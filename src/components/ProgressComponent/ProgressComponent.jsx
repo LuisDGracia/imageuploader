@@ -1,12 +1,15 @@
 import React from 'react'
-import { Container } from './ProgressStyles'
+import { Container, ProgressBar } from './ProgressStyles'
 import { Text } from '../CardComponent/CardStyles'
 
-export default function ProgressBar({ progress }) {
+export default function Progress(props) {
+
   return (
     <Container>
-      <Text>Uploading...</Text>
-      <ProgressBar />
+      <Text position={"left"} size={25} font={"Poppins"} alpha={0.65}>
+        Uploading...
+      </Text>
+      <ProgressBar max={100} value={props.progress} />
     </Container>
-  )
+  );
 }
