@@ -1,96 +1,78 @@
-import React, { Fragment, Component } from 'react'
-import { storage } from '../firebase'
+import React, { Fragment, useEffect, useState } from 'react'
+import firebase, { storage } from '../firebase'
 import Card from './CardComponent/CardComponent'
+import Progress from './ProgressComponent/ProgressComponent'
 
-export default class Uploader extends Component {
+export default function Uploader(){
+  
+  const [render, setRender] = useState(true)
+  const [upload, setUpload] = useState(0)
+  const [image, setImage] = useState(null)
+  const [error, setError] = useState("")
+  const [url, setUrl] = useState("")
 
-  constructor(props){
-    super(props)
-
-    this.state = {
-      render: true,
-      progress: 0,
-      image: null,
-      error: "",
-      url: ""
+  useEffect(() => {
+    if ( image && !url ) {
+      const storageRef = storage.ref(`imagenes/${image.name}`);
+      const task = storageRef.put(image);
+      
+      task.on(
+        firebase.storage.TaskEvent.STATE_CHANGED,
+        (snapshot) => {
+          var progresion = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          
+          if( progresion < 100 ){
+            setUpload( progresion )
+          }
+          console.log( progresion)
+        },
+        (err) =>{if( err ) setError(err)},
+        () => {
+          storage
+            .ref("imagenes")
+            .child(image.name)
+            .getDownloadURL()
+            .then((url) => {
+              setUrl(url);
+              setUpload(0);
+            });
+        }
+      );
     }
+  }, [image, upload, url]);
 
-    this.fileSelectedHandler = this.fileSelectedHandler.bind()
-  }
-
-  componentDidMount(){
-    this.setState({
-      progress: 0,
-      image: null,
-      error: "",
-      url: "",
-    });
-  }
-
-  fileSelectedHandler = async (event) => {
-
-    this.setState({
-      render: false
-    })
+  const fileSelectedHandler = (event) => {
+    setRender(false);
 
     const file = event.target.files[0];
-    
+
     if( file ){
       const fileType = file["type"];
       const validTypes = ["image/png", "image/jpeg"]
 
       if( validTypes.includes(fileType) ){
-        await this.setState({ error: "" });
-        await this.setState({ ...this.state, image: file });
-      }else return await this.setState({ error: "Incorrect file type"})
-
-    }else return await this.setState({ error: "No file were selected"})
-
-    if (this.state.image) {
-      const storageRef = storage.ref(`imagenes/${this.state.image.name}`);
-      const task = storageRef.put(this.state.image);
-
-      task.on(
-        "state_changed",
-        (snapshot) => {
-          var progress = 0
-          if( snapshot.metadata){
-            for (let i = 0; i <= 100; i+= 0.5) {
-                progress = i
-                this.setState({ progress: progress });
-            }
-          }
-        },
-        async (err) => await this.setState({ error: err }),
-        () => {
-          storage
-            .ref("imagenes")
-            .child(this.state.image.name)
-            .getDownloadURL()
-            .then( (url) => {
-              this.setState({ url: url });
-              this.setState({ progress: 0 });
-            });
-        }
-      );
-    } else return await this.setState({ error: "No image available" });
+        setError("");
+        setImage(file);
+      }else setError("Incorrect file type")
+    }else setError("No file were selected")
   }
 
-  render(){
-    return (
-      <Fragment>
-        {this.state.render ? (
-          <Card upload={this.fileSelectedHandler} />
-        ) : this.state.error ? (
-          <p style={{ color: "red", margin: "0 auto" }}>{this.state.error}</p>
-        ) : this.state.progress > 0 ? (
-          <progress style={{ margin: "0 auto" }}></progress>
-        ) : this.state.url ? (
-          <p style={{ margin: "0 auto" }}>{this.state.url}</p>
-        ) : (
-          <div></div>
-        )}
-      </Fragment>
-    );
-  }
+  return (
+    <Fragment>
+      {render ? (
+        <Card uploadImage={fileSelectedHandler} />
+      ) : error ? (
+        <Fragment>
+          <Card uploadImage={fileSelectedHandler} />
+          <p style={{ color: "red", margin: "0 auto" }}>{error}</p>
+        </Fragment>
+      ) : url ? (
+        <p style={{ margin: "0 auto" }}>{url}</p>
+      ) : (
+        <Progress progress={upload} />
+      )}
+    </Fragment>
+  );
 }
