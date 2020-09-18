@@ -23,4 +23,9 @@ export const Button = styled.label`
   text-align: center;
   border-radius: 10px;
   background-color: #2f80ed;
+
+  &:hover {
+    background-color: #2b68ba;
+    cursor: pointer;
+  }
 `;

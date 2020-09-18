@@ -22,4 +22,9 @@ export const CopyLink = styled.button`
   border: none;
   border-radius: 10px;
   background-color: #2f80ed;
+
+  &:hover {
+    background-color: #2b68ba;
+    cursor: pointer;
+  }
 `;

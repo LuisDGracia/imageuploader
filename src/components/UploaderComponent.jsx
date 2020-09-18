@@ -56,13 +56,51 @@ export default function Uploader(){
     }else setError("No file were selected")
   }
 
+  const onFileDrop = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    setRender(false)
+    
+    const file = event.dataTransfer.files[0];
+    console.log( file )
+    if( file ){
+      const fileType = file["type"];
+      const validTypes = ["image/png", "image/jpeg"]
+
+      if( validTypes.includes(fileType) ){
+        setError("");
+        setImage(file);
+      }else setError("Incorrect file type")
+    }else setError("No file were selected")
+  }
+
+  const onFileEnter = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  const onFileOver = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
   return (
     <Fragment>
       {render ? (
-        <Card uploadImage={fileSelectedHandler} />
+        <Card
+          uploadImage={fileSelectedHandler}
+          filedrop={onFileDrop}
+          fileenter={onFileEnter}
+          fileover={onFileOver}
+        />
       ) : error ? (
         <Fragment>
-          <Card uploadImage={fileSelectedHandler} />
+          <Card
+            uploadImage={fileSelectedHandler}
+            filedrop={onFileDrop}
+            fileenter={onFileEnter}
+            fileover={onFileOver}
+          />
           <p style={{ color: "red", margin: "0 auto" }}>{error}</p>
         </Fragment>
       ) : url ? (
