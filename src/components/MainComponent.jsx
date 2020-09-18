@@ -1,14 +1,12 @@
 import React, { Fragment } from 'react'
-import { Container, Text } from './CardComponent/CardStyles'
+import { Text } from './Global_Styled_Components/Styles'
 import Uploader from './UploaderComponent'
 
 function Main() {
   return (
     <Fragment>
-      <Container>
-        <Uploader />
-        <Text size={ 12 } font= {"Courier New"} >&copy;Zuzki made this</Text>
-      </Container>
+      <Uploader />
+      <Text size={ 12 } font= {"Courier New"} >&copy;Zuzki made this</Text>
     </Fragment>
   )
 }

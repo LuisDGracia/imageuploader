@@ -1,22 +1,42 @@
-import React from 'react'
-import { Container, CopyLink, Preview, Url, UrlContainer } from './ImageStyle'
+import React, { useRef } from 'react'
+import { Container, Text } from '../Global_Styled_Components/Styles';
+import { CopyLink, Preview, Url } from './ImageStyle'
 import CheckCircle from '@material-ui/icons/CheckCircle'
-import { Text } from '../CardComponent/CardStyles';
 
-export default function Image() {
+export default function Image( props ) {
+
+  const urlRef = useRef("");
+
+  const copyHandler = (e) =>{
+
+    const urlCopy = urlRef;
+    const range = document.createRange();
+    const selection = window.getSelection();
+    
+    range.selectNodeContents( urlCopy.current );
+    selection.removeAllRanges();
+    selection.addRange(range);
+    
+    document.execCommand('copy');
+    alert('Photo url copied to clipboard');
+  }
+
   return (
-    <Container>
-      <CheckCircle style={{marginLeft: "auto", marginRight: "auto", color: "#219653", fontSize: 68 }} />
+    <Container width={30} height={60} padding={30} direction="column">
+      <CheckCircle
+        style={{
+          marginLeft: "auto",
+          marginRight: "auto",
+          color: "#219653",
+          fontSize: 68,
+        }}
+      />
       <Text>Upload complete</Text>
-      <Preview src="https://firebasestorage.googleapis.com/v0/b/image-upload-tester-70ec7.appspot.com/o/imagenes%2Fpexels-nout-gons-378570.jpg?alt=media&token=77a1b355-392e-4e50-931b-1bec5727f5cb" />
-      <UrlContainer>
-        <Url>
-          {
-            "https://firebasestorage.googleap is.com/v0/b/image-upload-tester-70ec7.appspot.com/o/imagenes%2Fpexels-nout-gons-378570.jpg?alt=media&token=77a1b355-392e-4e50-931b-1bec5727f5cb"
-          }
-        </Url>
-        <CopyLink>Copy Link</CopyLink>
-      </UrlContainer>
+      <Preview src={props.Url} />
+      <Container width={85} direction="row">
+        <Url ref={urlRef}>{props.Url}</Url>
+        <CopyLink onClick={copyHandler}>Copy Link</CopyLink>
+      </Container>
     </Container>
   );
 }

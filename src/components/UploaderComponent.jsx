@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import firebase, { storage } from '../firebase'
 import Card from './CardComponent/CardComponent'
+import Image from './ImageComponent/ImageComponent'
 import Progress from './ProgressComponent/ProgressComponent'
 
 export default function Uploader(){
@@ -65,7 +66,7 @@ export default function Uploader(){
           <p style={{ color: "red", margin: "0 auto" }}>{error}</p>
         </Fragment>
       ) : url ? (
-        <p style={{ margin: "0 auto" }}>{url}</p>
+        <Image Url={url} />
       ) : (
         <Progress progress={upload} />
       )}

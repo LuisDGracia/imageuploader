@@ -1,11 +1,11 @@
 import React from 'react'
-import { Container, ProgressBar } from './ProgressStyles'
-import { Text } from '../CardComponent/CardStyles'
+import { ProgressBar } from './ProgressStyles'
+import { Container, Text } from '../Global_Styled_Components/Styles'
 
 export default function Progress(props) {
 
   return (
-    <Container>
+    <Container width={70} height={20} direction="column">
       <Text position={"left"} size={25} font={"Poppins"} alpha={0.65}>
         Uploading...
       </Text>
