@@ -4,14 +4,19 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: ${props => props.direction };
+  flex-direction: column;
 
   border-radius: 10px;
   box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
-  padding: ${ props => props.padding }px;
 
   width: ${(props) => props.width}%;
   height: ${(props) => props.height}%;
+
+  @media (max-width: 1023px){
+    width: 75%;
+    height: 60%;
+  }
+
 `;
 
 export const Text = styled.p`
@@ -34,4 +39,14 @@ export const Text = styled.p`
   font-size: ${(props) => props.size || "15"}px;
   font-family: ${(props) => props.font || "sans-serif"};
   color: rgba(0, 0, 0, ${(props) => props.alpha || "1"});
+
+  ${ props => {
+    if( props.mobile ){
+      return `@media (max-width: 1023px){
+        position:absolute;
+        top: -500px;
+        visibility: hidden;
+      }`;
+    }
+  }}
 `;

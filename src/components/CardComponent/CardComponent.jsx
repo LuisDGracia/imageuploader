@@ -4,7 +4,7 @@ import { Drag, Nothing, Button } from "./CardStyles";
 
 function DragDrop( props ) {
   return (
-    <Container width={30} height={70} direction="column">
+    <Container width={30} height={70}>
       <Text size={ 27 } alpha={ 0.7 } >Upload you image</Text>
       <Text size={ 14 } alpha={ 0.4 } >File should be Jpeg, Png...</Text>
       <Drag 
@@ -13,7 +13,7 @@ function DragDrop( props ) {
         onDrop={ props.filedrop } >
         <Text size={14} alpha={ 0.4 } position="bottom" >Drag &amp; Drop your image here </Text>
       </Drag>
-      <Text size={ 14 } alpha={ 0.4 }>Or</Text>
+      <Text size={ 14 } alpha={ 0.4 } mobile>Or</Text>
       <Button htmlFor="files" >Choose a file</Button>
       <Nothing type='file' id="files" onChange= { props.uploadImage } />
     </Container>

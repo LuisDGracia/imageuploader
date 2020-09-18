@@ -1,11 +1,12 @@
-import React, { useRef } from 'react'
+import React, { Fragment, useRef, useState } from 'react'
 import { Container, Text } from '../Global_Styled_Components/Styles';
-import { CopyLink, Preview, Url } from './ImageStyle'
+import { CopyLink, Preview, ReloadBtn, Url, UrlContainer } from './ImageStyle'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 
 export default function Image( props ) {
 
   const urlRef = useRef("");
+  const [copied, setCopied] = useState(false)
 
   const copyHandler = (e) =>{
 
@@ -18,25 +19,37 @@ export default function Image( props ) {
     selection.addRange(range);
     
     document.execCommand('copy');
-    alert('Photo url copied to clipboard');
+    setCopied(true)
+  }
+
+  const reloadHandler = () => {
+    window.location.reload(false);
   }
 
   return (
-    <Container width={30} height={60} padding={30} direction="column">
-      <CheckCircle
-        style={{
-          marginLeft: "auto",
-          marginRight: "auto",
-          color: "#219653",
-          fontSize: 68,
-        }}
-      />
-      <Text>Upload complete</Text>
-      <Preview src={props.Url} />
-      <Container width={85} direction="row">
-        <Url ref={urlRef}>{props.Url}</Url>
-        <CopyLink onClick={copyHandler}>Copy Link</CopyLink>
+    <Fragment>
+      <Container width={30} height={60} padding={30}>
+        <CheckCircle
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            color: "#219653",
+            fontSize: 50,
+          }}
+        />
+        <Text style={{margin: 0}} >Upload complete</Text>
+        <Preview src={props.Url} />
+        <UrlContainer width={85}>
+          <Url ref={urlRef}>{props.Url}</Url>
+          <CopyLink onClick={copyHandler}>Copy Link</CopyLink>
+        </UrlContainer>
       </Container>
-    </Container>
+      { copied ? 
+        <Fragment>
+          <p style={{"color": "green"}} >File location copied</p>
+          <ReloadBtn onClick={ reloadHandler } >Upload image</ReloadBtn>
+        </Fragment>
+        : <div></div> }
+    </Fragment>
   );
 }

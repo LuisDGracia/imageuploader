@@ -5,8 +5,14 @@ export const Drag = styled.div`
   height: 40%;
   align-self: center;
   border-radius: 10px;
-  border: 2px dashed rgba(128, 198, 255, 1); 
+  border: 2px dashed rgba(128, 198, 255, 1);
   background-color: rgba(128, 198, 255, 0.25);
+
+  @media (max-width: 1023px){
+    position:absolute;
+    top: -500px;
+    visibility: hidden;
+  }
 `;
 
 export const Nothing = styled.input`
