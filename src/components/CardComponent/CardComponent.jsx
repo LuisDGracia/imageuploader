@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Text } from '../Global_Styled_Components/Styles';
+import { Container, Text } from '../GlobalStyles';
 import { Drag, Nothing, Button } from "./CardStyles";
 
 function DragDrop( props ) {

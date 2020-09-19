@@ -50,3 +50,30 @@ export const Text = styled.p`
     }
   }}
 `;
+
+export const Notification = styled.div`
+  margin-top: 10px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  width: 15%;
+  height: 50px;
+  text-align: center;
+
+  ${ props => {
+    switch(props.alert){
+
+      case "success":
+        return `background-color: #c0dec7;
+                color: #61936b;
+                border: 1px solid #61936b;`;
+      
+      case "danger":
+        return `background-color: #e9c1c6;
+                color: #a5696e;
+                border: 1px solid #a5696e;`;
+      
+      default: return ``
+    }
+  }}
+
+`;

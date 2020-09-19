@@ -1,5 +1,5 @@
 import React, { Fragment, useRef, useState } from 'react'
-import { Container, Text } from '../Global_Styled_Components/Styles';
+import { Container, Notification, Text } from '../GlobalStyles';
 import { CopyLink, Preview, ReloadBtn, Url, UrlContainer } from './ImageStyle'
 import CheckCircle from '@material-ui/icons/CheckCircle'
 
@@ -46,7 +46,7 @@ export default function Image( props ) {
       </Container>
       { copied ? 
         <Fragment>
-          <p style={{"color": "green"}} >File location copied</p>
+          <Notification alert="success" ><p>File location copied</p></Notification>
           <ReloadBtn onClick={ reloadHandler } >Upload image</ReloadBtn>
         </Fragment>
         : <div></div> }

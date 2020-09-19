@@ -1,6 +1,6 @@
 import React from 'react'
 import { ProgressBar } from './ProgressStyles'
-import { Container, Text } from '../Global_Styled_Components/Styles'
+import { Container, Text } from '../GlobalStyles'
 
 export default function Progress(props) {
 

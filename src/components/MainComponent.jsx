@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Text } from './Global_Styled_Components/Styles'
+import { Text } from './GlobalStyles'
 import Uploader from './UploaderComponent'
 
 function Main() {
