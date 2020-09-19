@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import firebase, { storage } from '../firebase'
 import Card from './CardComponent/CardComponent'
+import { Notification } from './GlobalStyles'
 import Image from './ImageComponent/ImageComponent'
 import Progress from './ProgressComponent/ProgressComponent'
 
@@ -13,7 +14,7 @@ export default function Uploader(){
   const [url, setUrl] = useState("")
 
   useEffect(() => {
-    if ( image && !url ) {
+    if ( image ) {
       const storageRef = storage.ref(`imagenes/${image.name}`);
       const task = storageRef.put(image);
       
@@ -37,8 +38,8 @@ export default function Uploader(){
             });
         }
       );
-    }
-  }, [image, url]);
+    }else setError("No file available");
+  }, [image]);
 
   const fileSelectedHandler = (event) => {
     setRender(false);
@@ -87,12 +88,14 @@ export default function Uploader(){
   return (
     <Fragment>
       {render ? (
-        <Card
-          uploadImage={fileSelectedHandler}
-          filedrop={onFileDrop}
-          fileenter={onFileEnter}
-          fileover={onFileOver}
-        />
+        <Fragment>
+          <Card
+            uploadImage={fileSelectedHandler}
+            filedrop={onFileDrop}
+            fileenter={onFileEnter}
+            fileover={onFileOver}
+          />
+        </Fragment>
       ) : error ? (
         <Fragment>
           <Card
@@ -101,7 +104,9 @@ export default function Uploader(){
             fileenter={onFileEnter}
             fileover={onFileOver}
           />
-          <p style={{ color: "red", margin: "0 auto" }}>{error}</p>
+          <Notification alert="danger">
+            <p>{error}</p>
+          </Notification>
         </Fragment>
       ) : url ? (
         <Image Url={url} />
