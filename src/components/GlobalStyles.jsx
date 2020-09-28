@@ -24,7 +24,7 @@ export const Text = styled.p`
   ${(props) => {
     switch (props.position) {
       case "bottom":
-        const bottom = ["position: relative;", "top: 130px;"];
+        const bottom = ["position: absolute;", "top: 170px;", "left: 25%;"];
         return bottom;
 
       case "left":

@@ -11,6 +11,7 @@ function DragDrop( props ) {
         onDragEnter={ props.fileenter }
         onDragOver={ props.fileover }
         onDrop={ props.filedrop } >
+          <img src="./assets/images/upload.png" alt="upload icon" className="icon" />
         <Text size={14} alpha={ 0.4 } position="bottom" >Drag &amp; Drop your image here </Text>
       </Drag>
       <Text size={ 14 } alpha={ 0.4 } mobile>Or</Text>

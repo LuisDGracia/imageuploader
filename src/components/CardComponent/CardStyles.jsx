@@ -4,6 +4,7 @@ export const Drag = styled.div`
   width: 80%;
   height: 40%;
   align-self: center;
+  position: relative;
   border-radius: 10px;
   border: 2px dashed rgba(128, 198, 255, 1);
   background-color: rgba(128, 198, 255, 0.25);
@@ -12,6 +13,14 @@ export const Drag = styled.div`
     position:absolute;
     top: -500px;
     visibility: hidden;
+  }
+
+  .icon{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top: 50px;
+    left 35%;
   }
 `;
 
