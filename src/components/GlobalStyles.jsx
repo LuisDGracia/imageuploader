@@ -21,10 +21,11 @@ export const Container = styled.div`
 
 export const Text = styled.p`
   text-align: center;
+  margin-bottom: 10px;
   ${(props) => {
     switch (props.position) {
       case "bottom":
-        const bottom = ["position: absolute;", "top: 170px;", "left: 25%;"];
+        const bottom = ["position: absolute;", "top: 140px;", "left: 60px;"];
         return bottom;
 
       case "left":

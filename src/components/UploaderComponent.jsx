@@ -81,6 +81,13 @@ export default function Uploader(){
   }
 
   const onFileOver = (event) => {
+    event.target.style.backgroundColor = "rgba(128, 198, 255, 0.5)";
+    event.stopPropagation();
+    event.preventDefault();
+  }
+
+  const onFileExit = ( event ) => {
+    event.target.style.backgroundColor = "rgba(128, 198, 255, 0.25)";
     event.stopPropagation();
     event.preventDefault();
   }
@@ -91,10 +98,10 @@ export default function Uploader(){
         <Fragment>
           <Card
             uploadImage={fileSelectedHandler}
-            filedrop={onFileDrop}
-            fileenter={onFileEnter}
-            fileover={onFileOver}
-          />
+            fileDrop={onFileDrop}
+            fileEnter={onFileEnter}
+            fileOver={onFileOver}
+            fileLeave={onFileExit} />
         </Fragment>
       ) : error ? (
         <Fragment>

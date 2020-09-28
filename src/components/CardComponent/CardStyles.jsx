@@ -16,11 +16,11 @@ export const Drag = styled.div`
   }
 
   .icon{
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    top: 50px;
-    left 35%;
+    top: 30px;
+    left 110px;
   }
 `;
 
